@@ -41,7 +41,7 @@ jobs:
         run: npm install -g @angular/cli
 
       - name: Build
-        run: ng build --configuration production --base-href "https://drewroen.github.io/osrs-large-money-moves/"
+        run: ng build --configuration production
 
       - name: Install angular-cli-ghpages
         run: npm install -g angular-cli-ghpages
@@ -52,4 +52,4 @@ jobs:
         run: |
           git config user.email "drewroen@gmail.com"
           git config user.name "Drew Roen (Github Actions)"
-          ng deploy --no-silent
+          ng deploy
