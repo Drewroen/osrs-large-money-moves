@@ -49,4 +49,4 @@ jobs:
       - name: Deploy
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx --no-silent angular-cli-ghpages --dir=dist/osrs-large-moves
+        run: ng deploy --no-silent
