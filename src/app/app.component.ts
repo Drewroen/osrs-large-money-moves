@@ -1,6 +1,6 @@
-import { ItemSummary } from './item-table/item-table.component';
-import { GERepositoryService } from './ge-repository.service';
+import { GERepositoryService } from './services/ge-repository.service';
 import { Component, OnInit } from '@angular/core';
+import { ItemSummary } from './interfaces/item';
 
 const ITEMS_TO_TRACK = [
   2, // Cannonball
@@ -21,11 +21,11 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     ITEMS_TO_TRACK.forEach(async val => {
-      await this.geRepositoryService.getItemData(val);
+      await this.geRepositoryService.addItemToSummary(val);
     })
   }
 
-  getSummary(): ItemSummary[] {
-    return this.geRepositoryService.itemSummary();
+  getItemSummaries(): Map<number, ItemSummary> {
+    return this.geRepositoryService.itemSummaries;
   }
 }
