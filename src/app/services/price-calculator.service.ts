@@ -17,7 +17,6 @@ export class PriceCalculatorService {
   calculateBuyPrice(itemPriceSummary: ItemPriceSummary): number {
     var recentBuyPrices: number[] = this.recentPrices([...itemPriceSummary.lowPriceSeries]);
     recentBuyPrices.sort();
-    console.log(recentBuyPrices);
     var recentPercentileValue = Math.floor(recentBuyPrices.length * .3);
 
     return recentBuyPrices[recentPercentileValue];
