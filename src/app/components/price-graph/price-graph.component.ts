@@ -68,7 +68,7 @@ export class PriceGraphComponent {
         tickInterval: 2,
         labels: {
           style: {
-            fontSize: "8"
+            fontSize: "10"
           }
         }
       },
@@ -79,8 +79,8 @@ export class PriceGraphComponent {
         text: ""
       },
       chart: {
-        height: 75,
-        width: 300
+        height: 150,
+        width: 450
       },
       credits: {
         enabled: false

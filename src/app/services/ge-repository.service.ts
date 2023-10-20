@@ -50,6 +50,7 @@ export class GERepositoryService {
             iconUrl:
               'https://oldschool.runescape.wiki/images/' +
               val.icon.replaceAll(' ', '_'),
+            limit: val.limit
           });
         });
       });

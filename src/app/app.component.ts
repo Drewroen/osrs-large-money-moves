@@ -21,6 +21,10 @@ const ITEMS_TO_TRACK = [
   453, // Coal
   440, // Iron ore
   21880, // Wrath rune
+  564, // Cosmic rune
+  563, // Law rune
+  561, // Nature rune
+  11212, // Dragon arrow
 ]
 
 @Component({

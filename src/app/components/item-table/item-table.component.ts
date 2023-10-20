@@ -12,10 +12,18 @@ export class ItemTableComponent {
   constructor(public geRepositoryService: GERepositoryService, public priceCalculatorService: PriceCalculatorService) {}
 
   @Input() dataSource!: Map<number, ItemPriceSummary>;
-  displayedColumns: string[] = ['name', 'buy', 'sell', 'profit', 'graph'];
+  displayedColumns: string[] = ['name', 'buy', 'sell', 'limit', 'total_profit', 'roi', 'graph'];
 
   dataToList() : ItemPriceSummary[] {
-    return Array.from(this.dataSource.values());
+    return Array.from(this.dataSource.values()).sort((a, b) => {
+      var aProfit = this.getROI(a.id);
+      var bProfit = this.getROI(b.id);
+      if (!aProfit)
+        return 1;
+      if (!bProfit)
+        return -1;
+      return aProfit < bProfit ? 1 : -1;
+    });
   }
 
   getItemSummaryFromId(id: number): ItemPriceSummary {
@@ -38,7 +46,21 @@ export class ItemTableComponent {
     return this.priceCalculatorService.calculateSellPrice(this.geRepositoryService.itemPriceSummaries.get(id)!);
   }
 
-  getProfit(id: number): number {
-    return this.getSellPrice(id) - this.getBuyPrice(id) - Math.floor(this.getSellPrice(id) * .01);
+  getProfit(id: number): number | undefined {
+    var limit = this.getMappingFromId(id).limit;
+    if (!this.getSellPrice(id) || !this.getBuyPrice(id))
+      return undefined;
+    var profitPerItem = this.getSellPrice(id) - this.getBuyPrice(id) - Math.floor(this.getSellPrice(id) * .01);
+    return limit * profitPerItem;
+  }
+
+  getROI(id: number): number | undefined {
+    var profit = this.getProfit(id);
+    var limit = this.getMappingFromId(id).limit;
+    var buyPrice = this.getBuyPrice(id);
+    if (!profit)
+      return undefined;
+    var roi = (profit / (limit * buyPrice));
+    return Math.round(roi * 10000) / 100
   }
 }

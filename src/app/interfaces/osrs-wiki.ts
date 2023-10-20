@@ -12,4 +12,5 @@ export interface OSRSWikiItemMapping {
   id: number;
   name: string;
   icon: string;
+  limit: number;
 }

@@ -18,9 +18,19 @@
     <td mat-cell *matCellDef="let element"> {{getSellPrice(element.id)}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="profit">
+  <ng-container matColumnDef="limit">
+    <th mat-header-cell *matHeaderCellDef> Limit </th>
+    <td mat-cell *matCellDef="let element"> {{getMappingFromId(element.id).limit}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="total_profit">
     <th mat-header-cell *matHeaderCellDef> Profit </th>
     <td mat-cell *matCellDef="let element"> {{getProfit(element.id)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="roi">
+    <th mat-header-cell *matHeaderCellDef> ROI % </th>
+    <td mat-cell *matCellDef="let element"> {{getROI(element.id)}}% </td>
   </ng-container>
 
   <ng-container matColumnDef="graph">

@@ -9,4 +9,5 @@ export interface ItemMappingSummary {
   id: number;
   name: string;
   iconUrl: string;
+  limit: number;
 }
