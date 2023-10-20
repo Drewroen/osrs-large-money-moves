@@ -9,15 +9,15 @@ export class PriceCalculatorService {
 
   calculateSellPrice(itemPriceSummary: ItemPriceSummary): number {
     var sellPrices: number[] = this.recentPrices([...itemPriceSummary.highPriceSeries]);
-    sellPrices.sort();
+    sellPrices.sort(function(a, b){return b-a});
     var percentileValue = Math.floor(sellPrices.length * .6);
     return sellPrices[percentileValue];
   }
 
   calculateBuyPrice(itemPriceSummary: ItemPriceSummary): number {
     var recentBuyPrices: number[] = this.recentPrices([...itemPriceSummary.lowPriceSeries]);
-    recentBuyPrices.sort();
-    var recentPercentileValue = Math.floor(recentBuyPrices.length * .3);
+    recentBuyPrices.sort(function(a, b){return b-a});
+    var recentPercentileValue = Math.floor(recentBuyPrices.length * .8);
 
     return recentBuyPrices[recentPercentileValue];
   }
