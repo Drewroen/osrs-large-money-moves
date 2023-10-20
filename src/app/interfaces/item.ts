@@ -1,8 +1,10 @@
 export interface ItemPriceSummary {
   id: number;
   name: string;
-  highPriceSeries: number[];
-  lowPriceSeries: number[];
+  fullHighPriceSeries: number[];
+  fullLowPriceSeries: number[];
+  recentHighPriceSeries: number[];
+  recentLowPriceSeries: number[];
 }
 
 export interface ItemMappingSummary {

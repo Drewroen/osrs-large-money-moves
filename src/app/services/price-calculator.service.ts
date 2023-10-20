@@ -8,19 +8,23 @@ export class PriceCalculatorService {
   constructor() { }
 
   calculateSellPrice(itemPriceSummary: ItemPriceSummary): number {
-    var sellPrices: number[] = this.recentPrices([...itemPriceSummary.highPriceSeries]);
+    var sellPrices: number[] = [...itemPriceSummary.fullHighPriceSeries];
     sellPrices.sort(function(a, b){return b-a});
-    var percentileValue = Math.floor(sellPrices.length * .6);
+    var percentileValue = Math.floor(sellPrices.length * .5);
     return sellPrices[percentileValue];
   }
 
   calculateBuyPrice(itemPriceSummary: ItemPriceSummary): number {
-    var recentBuyPrices: number[] = this.recentPrices([...itemPriceSummary.lowPriceSeries]);
-    recentBuyPrices.sort(function(a, b){return b-a});
-    var recentPercentileValue = Math.floor(recentBuyPrices.length * .8);
+    var buyPrices: number[] = [...itemPriceSummary.fullLowPriceSeries];
+    buyPrices.sort(function(a, b){return b-a});
+    var percentileValue = Math.floor(buyPrices.length * .7);
 
-    return recentBuyPrices[recentPercentileValue];
+    return buyPrices[percentileValue];
   }
+
+  // goodMerch(ItemPriceSummary: ItemPriceSummary): boolean {
+  //   var buyPrice = this.calculateBuyPrice(ItemPriceSummary);
+  // }
 
   recentPrices(prices: number[]): number[] {
     return prices.slice(Math.ceil((5 * prices.length) / 6));

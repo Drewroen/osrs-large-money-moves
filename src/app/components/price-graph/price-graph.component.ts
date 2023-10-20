@@ -19,14 +19,14 @@ export class PriceGraphComponent {
     this.chartOptions.series = [
       {
         type: 'line',
-        data: this.itemPriceSummary.highPriceSeries,
+        data: this.itemPriceSummary.fullHighPriceSeries,
         name: "High",
         enableMouseTracking: false,
         opacity: .3
       },
       {
         type: 'line',
-        data: this.itemPriceSummary.lowPriceSeries,
+        data: this.itemPriceSummary.fullLowPriceSeries,
         name: "Low",
         enableMouseTracking: false,
         opacity: .3
@@ -47,12 +47,12 @@ export class PriceGraphComponent {
 
   generateSellLineSeries(): number[] {
     var sellPrice = this.priceCalculatorService.calculateSellPrice(this.itemPriceSummary);
-    return Array<number>(this.itemPriceSummary.highPriceSeries.length).fill(sellPrice);
+    return Array<number>(this.itemPriceSummary.fullHighPriceSeries.length).fill(sellPrice);
   }
 
   generateBuyLineSeries(): number[] {
     var buyPrice = this.priceCalculatorService.calculateBuyPrice(this.itemPriceSummary);
-    return Array<number>(this.itemPriceSummary.lowPriceSeries.length).fill(buyPrice);
+    return Array<number>(this.itemPriceSummary.fullLowPriceSeries.length).fill(buyPrice);
   }
 
   defaultHighchartsOptions(): Highcharts.Options {
@@ -79,8 +79,8 @@ export class PriceGraphComponent {
         text: ""
       },
       chart: {
-        height: 150,
-        width: 450
+        height: 75,
+        width: 200
       },
       credits: {
         enabled: false

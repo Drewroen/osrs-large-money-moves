@@ -28,11 +28,15 @@ export class GERepositoryService {
       )
       .subscribe((response) => {
         var data = response.data;
+        var highPriceSeries = data.map((val) => val.avgHighPrice);
+        var lowPriceSeries = data.map((val) => val.avgLowPrice);
         this.itemPriceSummaries.set(itemId, {
           id: itemId,
           name: itemId.toString(),
-          highPriceSeries: data.map((val) => val.avgHighPrice),
-          lowPriceSeries: data.map((val) => val.avgLowPrice),
+          fullHighPriceSeries: highPriceSeries,
+          fullLowPriceSeries: lowPriceSeries,
+          recentHighPriceSeries: highPriceSeries.slice((5 * highPriceSeries.length) / 6),
+          recentLowPriceSeries: lowPriceSeries.slice((5 * lowPriceSeries.length) / 6),
         });
       });
   }
