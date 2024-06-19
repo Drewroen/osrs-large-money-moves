@@ -9,19 +9,28 @@ import { PriceCalculatorService } from 'src/app/services/price-calculator.servic
   templateUrl: 'item-table.component.html',
 })
 export class ItemTableComponent {
-  constructor(public geRepositoryService: GERepositoryService, public priceCalculatorService: PriceCalculatorService) {}
+  constructor(
+    public geRepositoryService: GERepositoryService,
+    public priceCalculatorService: PriceCalculatorService
+  ) {}
 
   @Input() dataSource!: Map<number, ItemPriceSummary>;
-  displayedColumns: string[] = ['name', 'buy', 'sell', 'limit', 'total_profit', 'roi', 'graph'];
+  displayedColumns: string[] = [
+    'name',
+    'buy',
+    'sell',
+    'limit',
+    'total_profit',
+    'roi',
+    'graph',
+  ];
 
-  dataToList() : ItemPriceSummary[] {
+  dataToList(): ItemPriceSummary[] {
     return Array.from(this.dataSource.values()).sort((a, b) => {
       var aProfit = this.getROI(a.id);
       var bProfit = this.getROI(b.id);
-      if (!aProfit)
-        return 1;
-      if (!bProfit)
-        return -1;
+      if (!aProfit) return 1;
+      if (!bProfit) return -1;
       return aProfit < bProfit ? 1 : -1;
     });
   }
@@ -39,18 +48,24 @@ export class ItemTableComponent {
   }
 
   getBuyPrice(id: number): number {
-    return this.priceCalculatorService.calculateBuyPrice(this.geRepositoryService.itemPriceSummaries.get(id)!);
+    return this.priceCalculatorService.calculateBuyPrice(
+      this.geRepositoryService.itemPriceSummaries.get(id)!
+    );
   }
 
   getSellPrice(id: number): number {
-    return this.priceCalculatorService.calculateSellPrice(this.geRepositoryService.itemPriceSummaries.get(id)!);
+    return this.priceCalculatorService.calculateSellPrice(
+      this.geRepositoryService.itemPriceSummaries.get(id)!
+    );
   }
 
   getProfit(id: number): number | undefined {
     var limit = this.getMappingFromId(id).limit;
-    if (!this.getSellPrice(id) || !this.getBuyPrice(id))
-      return undefined;
-    var profitPerItem = this.getSellPrice(id) - this.getBuyPrice(id) - Math.floor(this.getSellPrice(id) * .01);
+    if (!this.getSellPrice(id) || !this.getBuyPrice(id)) return undefined;
+    var profitPerItem =
+      this.getSellPrice(id) -
+      this.getBuyPrice(id) -
+      Math.floor(this.getSellPrice(id) * 0.01);
     return limit * profitPerItem;
   }
 
@@ -58,9 +73,8 @@ export class ItemTableComponent {
     var profit = this.getProfit(id);
     var limit = this.getMappingFromId(id).limit;
     var buyPrice = this.getBuyPrice(id);
-    if (!profit)
-      return undefined;
-    var roi = (profit / (limit * buyPrice));
-    return Math.round(roi * 10000) / 100
+    if (!profit) return undefined;
+    var roi = profit / (limit * buyPrice);
+    return Math.round(roi * 10000) / 100;
   }
 }

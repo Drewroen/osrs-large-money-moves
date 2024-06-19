@@ -10,14 +10,14 @@ export class PriceCalculatorService {
   calculateSellPrice(itemPriceSummary: ItemPriceSummary): number {
     var sellPrices: number[] = [...itemPriceSummary.fullHighPriceSeries];
     sellPrices.sort(function(a, b){return b-a});
-    var percentileValue = Math.floor(sellPrices.length * .5);
+    var percentileValue = Math.floor(sellPrices.length * .3);
     return sellPrices[percentileValue];
   }
 
   calculateBuyPrice(itemPriceSummary: ItemPriceSummary): number {
     var buyPrices: number[] = [...itemPriceSummary.fullLowPriceSeries];
     buyPrices.sort(function(a, b){return b-a});
-    var percentileValue = Math.floor(buyPrices.length * .7);
+    var percentileValue = Math.floor(buyPrices.length * .8);
 
     return buyPrices[percentileValue];
   }
